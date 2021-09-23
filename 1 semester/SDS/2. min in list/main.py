@@ -70,8 +70,21 @@ def move_data(export_stack: list, import_stack: list):
 
 
 if __name__ == '__main__':
-    big_deque = collections.deque()
+    deq = collections.deque()
     r_stack, l_stack = [], []
+    q = int(input())
+    for i in range(q):
+        req = input().split(' ')
+        if req[0][0] == '-':
+            if req[0][1] == 'R':
+                print(remove_right(deq, r_stack))
+            else:
+                print(remove_left(deq, l_stack))
+        else:
+            if req[0][1] == 'R':
+                print(insert_right(deq, r_stack, int(req[1])))
+            else:
+                print(insert_left(deq, l_stack, int(req[1])))
     # with open('input.txt', 'r') as inpt:
     #     q = int(inpt.readline())
     #     for i in range(q):
@@ -86,16 +99,4 @@ if __name__ == '__main__':
     #                 print(insert_right(deq, r_stack, int(req[1])))
     #             else:
     #                 print(insert_left(deq, l_stack, int(req[1])))
-    q = int(input())
-    for i in range(q):
-        req = input().split(' ')
-        if req[0][0] == '-':
-            if req[0][1] == 'R':
-                print(remove_right(big_deque, r_stack))
-            else:
-                print(remove_left(big_deque, l_stack))
-        else:
-            if req[0][1] == 'R':
-                print(insert_right(big_deque, r_stack, int(req[1])))
-            else:
-                print(insert_left(big_deque, l_stack, int(req[1])))
+
