@@ -29,6 +29,7 @@ def get_changes_from_inc(number, bit_len):
 
 
 if __name__ == '__main__':
+    strt = datetime.datetime.now()
     with open('input.txt', 'r') as inpt:
         k = int(inpt.readline())
         bitseq = inpt.readline().replace(' ','')
@@ -50,6 +51,6 @@ if __name__ == '__main__':
             dif_num+=1
 
     numerator, denominator = fraction_reduction(counter2-counter1, increment_num)
-
+    print('time spent ', datetime.datetime.now() -strt)
     print(dif_num)
     print(str(numerator)+'/'+str(denominator))
