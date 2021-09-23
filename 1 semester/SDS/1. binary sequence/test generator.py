@@ -1,7 +1,7 @@
 
 
 if __name__ == '__main__':
-    n = 20
+    n = 60
     k = 2**n - 1
     with open('input.txt', 'w') as out:
         out.write(str(n)+'\n')

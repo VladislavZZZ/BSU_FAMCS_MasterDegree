@@ -7,51 +7,49 @@ def fraction_reduction(numerator, denominator):
     k = math.gcd(numerator, denominator)
     return numerator // k, denominator // k
 
-
-# def inc(arr: np.ndarray):
-#     i = arr.size - 1
-#     while arr[i] == 1:
-#         arr[i] = 0
-#         i -= 1
-#     arr[i] = 1  # setOne
-#     return arr.size - i
-
 def inc(arr: list):
     i = 0
     while arr[i] == 1:
         arr[i] = 0
         i += 1
-    arr[i] = 1  # setOne
+    arr[i] = 1
     return i+1
+
+def bseq_to_int(seq: str):
+    return int(seq,2)
+
+def get_changes_from_inc(number, bit_len):
+    counter = 0
+    max_changes = [0 for i in range(bit_len)]
+    for i in range(bit_len):
+        change_per_inc = number//2**i
+        counter += change_per_inc
+        max_changes[i] = change_per_inc
+    return counter, max_changes
 
 
 if __name__ == '__main__':
-    start = datetime.datetime.now()
     with open('input.txt', 'r') as inpt:
         k = int(inpt.readline())
-        arr = inpt.readline().split(' ')
-        arr.reverse()
+        bitseq = inpt.readline().replace(' ','')
         # bits = np.array(inpt.readline().split(' '), np.int)
-        bits = [int(item) for item in arr]
         increment_num = int(inpt.readline())
 
     # k = int(input())
-    # arr = input().split(' ')
-    # arr.reverse()
-    # # bits = np.array(inpt.readline().split(' '), np.int)
-    # bits = [int(item) for item in arr]
+    # bitseq = input().replace(' ','')
     # increment_num = int(input())
 
-    max_changed_bits = 0
-    sum_changed_bits = 0
-    for i in range(increment_num):
-        num_changes = inc(bits)
-        # if i%1000000==0:
-        #     print(i)
-        if num_changes > max_changed_bits:
-            max_changed_bits = num_changes
-        sum_changed_bits += num_changes
-    av_numerator, av_denominator = fraction_reduction(sum_changed_bits, increment_num)
-    print('time -',datetime.datetime.now() - start)
-    print('max ch - ',max_changed_bits)
-    print('av change', str(av_numerator)+'/'+str(av_denominator))
+    number = bseq_to_int(bitseq)
+    incremented_num = number + increment_num
+
+    counter1, max_changes1 = get_changes_from_inc(number,k)
+    counter2, max_changes2 = get_changes_from_inc(incremented_num,k)
+    dif_num = 0
+    for i in range(k):
+        if max_changes2[i]>max_changes1[i]:
+            dif_num+=1
+
+    numerator, denominator = fraction_reduction(counter2-counter1, increment_num)
+
+    print(dif_num)
+    print(str(numerator)+'/'+str(denominator))
